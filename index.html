@@ -1,23 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Quiz App</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="app.css" rel="stylesheet" type="text/css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Quiz App</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet"
-    type="text/css" />
-  <link href="app.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
-  <header>
-    <h1>The name of your quiz</h1>
-  </header>
-  <main></main>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.js" crossorigin="anonymous"></script>
-  <script src="app.js"></script>
-</body>
-
+  <body>
+    <div class="container">
+      <header>
+        <h1>Rivers Quiz</h1>
+      </header>
+      <main>
+        <div class="scorecard">
+          <p>Score: 0/6</p>
+          <p>Question: 1/6</p>
+        </div>
+        <div class="card beginCard">
+          <form id="startForm">
+            <h3>Welcome! Click start to begin!</h3>
+            <input class="btn" type="submit" value="Start" />
+          </form>
+          <img
+            src="images/jack-anstey-HtUBBdNDxpQ-unsplash.jpg"
+            alt="Image of calm river between mountains"
+          />
+        </div>
+        <div class="card">
+          <h3>You've completed the quiz!</h3>
+          <h4>Here is your score:</h4>
+          <input class="btn" type="submit" value="Try again" />
+        </div>
+        <div class="card">
+          <form id="quizForm">
+            <h4>How long is the Nile River?</h4>
+            <div>
+              <input
+                type="radio"
+                id="qOneA1"
+                name="quizQuestions"
+                value="4132"
+                required
+              />
+              <label class="correct" for="qOneA1">4132 miles</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="qOneA2"
+                name="quizQuestions"
+                value="4978"
+              />
+              <label for="qOneA2">4978 miles</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="qOneA3"
+                name="quizQuestions"
+                value="3122"
+              />
+              <label for="qOneA3">3122 miles</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="qOneA4"
+                name="quizQuestions"
+                value="3763"
+              />
+              <label for="qOneA4">3763 miles</label>
+            </div>
+            <div>
+              <input class="btn" type="submit" value="Submit" />
+            </div>
+          </form>
+        </div>
+        <!-- <ol>
+          <li><h4>How long is the Nile River?</h4></li>
+          <ul>
+            <li class="correct">4132 miles</li>
+            <li>4978 miles</li>
+            <li>3122 miles</li>
+            <li>3763 miles</li>
+          </ul>
+          <li><h4>What is a tributary?</h4></li>
+          <ul>
+            <li>A river that feeds into an ocean.</li>
+            <li>A river that is less than 500 miles long.</li>
+            <li>A river that contains both salt water and fresh water</li>
+            <li class="correct">A river that feeds into another river.</li>
+          </ul>
+          <li>
+            <h4>
+              What percentage of the world's water is contained in rivers?
+            </h4>
+          </li>
+          <ul>
+            <li>3.5%</li>
+            <li>8.9%</li>
+            <li class="correct">less than 1%</li>
+            <li>1.8%</li>
+          </ul>
+          <li><h4>Which river is the deepest in the world?</h4></li>
+          <ul>
+            <li>Nile River</li>
+            <li>Amazon River</li>
+            <li class="correct">Congo River</li>
+            <li>Mississippi River</li>
+          </ul>
+          <li><h4>Which country is known as "The land of rivers"?</h4></li>
+          <ul>
+            <li>India</li>
+            <li class="correct">Bangladesh</li>
+            <li>Russia</li>
+            <li>Congo</li>
+          </ul>
+          <li><h4>Which country has the biggest hydroelectric dam?</h4></li>
+          <ul>
+            <li>Brazil</li>
+            <li>Venezuela</li>
+            <li class="correct">China</li>
+            <li>USA</li>
+          </ul>
+        </ol> -->
+      </main>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="app.js"></script>
+  </body>
 </html>

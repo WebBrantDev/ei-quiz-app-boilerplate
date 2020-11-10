@@ -6,3 +6,77 @@
   * https://github.com/andreacardybailey/responsive_example/blob/master/styles/responsive-base.css 
   *
 */
+body {
+  font-family: 'Comfortaa', cursive;
+  line-height: 1.4;
+  background-color: #0D1821;
+  color: #F0F4EF;
+}
+
+.container {
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.card {
+  border: 2px solid #F0F4EF;
+  border-radius: 8px;
+  padding: 5% 10%;
+  margin: 20px;
+}
+
+.beginCard {
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+
+.card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.scorecard {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.btn {
+  margin: 10px;
+  background-color: #A1FCDF;
+  color: #0D1821;
+  border-radius: 4px;
+  padding: 12px 20px;
+  border: none;
+  margin-top: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.correct {
+  color: green;
+}
+
+@media all and (min-width:600px) {
+  .container {
+    width: 70%;
+  }
+
+  .card img {
+    width: 50%;
+  }
+
+  .beginCard {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}
