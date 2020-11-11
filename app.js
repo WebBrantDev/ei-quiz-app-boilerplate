@@ -110,7 +110,7 @@ function generateQuestionCard() {
     <div>
       <input
         type="radio"
-        id=question-two"
+        id="question-two"
         name="quizQuestions"
         value="${STORE.questions[indexQuestion()].answers[1]}"
       />
