@@ -128,7 +128,7 @@ function createStartCard() {
   return `</div>
     <div class="card beginCard">
       <form id="start-form">
-        <h3>Welcome! Click start to begin!</h3>
+        <h2>Welcome! Click start to begin!</h2>
         <input class="btn" id="start-js" type="submit" value="Start" />
       </form>
       <img
@@ -146,7 +146,7 @@ function generateQuestionCard() {
 </div>
   <div class="card">
   <form id="quiz-form">
-    <h4>${STORE.questions[indexQuestion()].question}</h4>
+    <h3>${STORE.questions[indexQuestion()].question}</h3>
     <div>
       <input
         type="radio"
@@ -175,7 +175,7 @@ function generateQuestionCard() {
         type="radio"
         id="answer-2"
         name="quizQuestions"
-        value="${STORE.questions[indexQuestion()].answers[2]}"
+        value="${STORE.questions[indexQuestion()].answers[2]}"  
       />
       <label for="answer-2">${
         STORE.questions[indexQuestion()].answers[2]
@@ -202,8 +202,8 @@ function generateQuestionCard() {
 // Generates and returns the final score card
 function generateScoreCard() {
   return `<div class="card">
-    <h3>You've completed the quiz!</h3>
-    <h4>Here is your score: ${STORE.score}/6</h4>
+    <h2>You've completed the quiz!</h2>
+    <h3>Here is your score: ${STORE.score}/6</h3>
     <form id="js-try-again">
     <input class="btn" type="submit" value="Try again" />
     </form>
