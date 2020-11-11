@@ -83,7 +83,6 @@ function createStartCard() {
 
 function indexQuestion() {
   const index = STORE.questionNumber - 1;
-  console.log(index);
   return index;
 }
 
@@ -98,49 +97,49 @@ function generateQuestionCard() {
     <div>
       <input
         type="radio"
-        id="question-one"
+        id="answer-0"
         name="quizQuestions"
         value="${STORE.questions[indexQuestion()].answers[0]}"
         required
       />
-      <label for="question-one">${
+      <label for="answer-0">${
         STORE.questions[indexQuestion()].answers[0]
       }</label>
     </div>
     <div>
       <input
         type="radio"
-        id="question-two"
+        id="answer-1"
         name="quizQuestions"
         value="${STORE.questions[indexQuestion()].answers[1]}"
       />
-      <label for="question-two">${
+      <label for="answer-1">${
         STORE.questions[indexQuestion()].answers[1]
       }</label>
     </div>
     <div>
       <input
         type="radio"
-        id="question-three"
+        id="answer-2"
         name="quizQuestions"
         value="${STORE.questions[indexQuestion()].answers[2]}"
       />
-      <label for="question-three">${
+      <label for="answer-2">${
         STORE.questions[indexQuestion()].answers[2]
       }</label>
     </div>
     <div>
       <input
         type="radio"
-        id="answer-four"
+        id="answer-3"
         name="quizQuestions"
         value="${STORE.questions[indexQuestion()].answers[3]}"
       />
-      <label for="answer-four">${
+      <label for="answer-3">${
         STORE.questions[indexQuestion()].answers[3]
       }</label>
     </div>
-    <div>
+    <div id="js-sub-div">
       <input class="btn" id="js-sub-btn" type="submit" value="Submit" />
     </div>
   </form>
@@ -157,9 +156,42 @@ function generateScoreCard() {
   </div>`;
 }
 
-// function generateCorrect (answer) {
-
-// }
+function generateCorrectOrIncorrectBanner() {
+  if (checkAnswer()) {
+    let selectedChoice = $("input[name=quizQuestions]:checked").val();
+    // alert(selectedChoice);
+    // alert(STORE.questions[indexQuestion()].answers.indexOf(selectedChoice));
+    $("#js-sub-btn").remove();
+    $("#quiz-form").after(
+      '<form id="next-form"><input class="btn" id="js-next-btn" type="submit" value="Next Question" /></form>'
+    );
+    $(
+      `label[for=answer-${STORE.questions[indexQuestion()].answers.indexOf(
+        selectedChoice
+      )}`
+    ).after("<div id='correct'><p>That is correct!</p></div>");
+    updateQuestionNumber();
+    addToScore();
+  } else {
+    let selectedChoice = $("input[name=quizQuestions]:checked").val();
+    // alert(selectedChoice);
+    // alert(STORE.questions[indexQuestion()].answers.indexOf(selectedChoice));
+    $("#js-sub-btn").remove();
+    $("#quiz-form").after(
+      '<form id="next-form"><input class="btn" id="js-next-btn" type="submit" value="Next Question" /></form>'
+    );
+    $(
+      `label[for=answer-${STORE.questions[indexQuestion()].answers.indexOf(
+        selectedChoice
+      )}`
+    ).after(
+      `<div id='incorrect'><p>That is incorrect! The correct answer is: ${
+        STORE.questions[indexQuestion()].correctAnswer
+      }</p></div>`
+    );
+    updateQuestionNumber();
+  }
+}
 
 // These functions return HTML templates
 
@@ -191,16 +223,26 @@ function startButtonClick() {
 function submitButtonClick() {
   $("main").on("submit", "#quiz-form", function (event) {
     event.preventDefault();
+    generateCorrectOrIncorrectBanner();
+  });
+}
 
-    let selectedChoice = $("input[name=quizQuestions]:checked").val();
-
-    if (selectedChoice === STORE.questions[indexQuestion()].correctAnswer) {
-      addToScore();
-    }
-
-    updateQuestionNumber();
+function nextBtnClick() {
+  $("main").on("submit", "#next-form", function (event) {
+    event.preventDefault();
     render();
   });
+}
+
+function checkAnswer() {
+  let selectedChoice = $("input[name=quizQuestions]:checked").val();
+  // alert(selectedChoice);
+  // alert(STORE.questions[indexQuestion()].correctAnswer);
+  if (selectedChoice === STORE.questions[indexQuestion()].correctAnswer) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function addToScore() {
@@ -239,6 +281,8 @@ function handler() {
   render();
   startButtonClick();
   submitButtonClick();
+  tryAgainButtonClick();
+  nextBtnClick();
 }
 
 $(handler);

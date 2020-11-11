@@ -29,10 +29,23 @@ body {
 .beginCard {
   display: flex;
   flex-direction: column;
-
 }
 
+#correct {
+  background-color: #A1FCDF;
+  color: #0D1821;
+  padding: 1px 20px;
+  border-radius: 8px;
+  margin: 4px;
+}
 
+#incorrect {
+  background-color: #A8201A;
+  color: #F0F4EF;
+  padding: 1px 20px;
+  border-radius: 8px;
+  margin: 4px;
+}
 
 .card img {
   width: 100%;
