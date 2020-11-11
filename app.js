@@ -86,6 +86,18 @@ function indexQuestion() {
   return index;
 }
 
+function disableBtnAfterSub() {
+  for (let i = 0; i < STORE.questions.length; i++) {
+    $(`input[id=answer-${i}]`).attr("disabled", "disabled");
+  }
+}
+
+function reenableBtnAfterNext() {
+  for (let i = 0; i < STORE.questions.length; i++) {
+    $(`input[id=answer-${i}]`).removeAttr("disabled");
+  }
+}
+
 function generateQuestionCard() {
   return `<div class="scorecard">
   <p>Score: ${STORE.score}/6</p>
@@ -224,12 +236,14 @@ function submitButtonClick() {
   $("main").on("submit", "#quiz-form", function (event) {
     event.preventDefault();
     generateCorrectOrIncorrectBanner();
+    disableBtnAfterSub();
   });
 }
 
 function nextBtnClick() {
   $("main").on("submit", "#next-form", function (event) {
     event.preventDefault();
+    reenableBtnAfterNext();
     render();
   });
 }
