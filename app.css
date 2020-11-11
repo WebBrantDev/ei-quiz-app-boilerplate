@@ -13,6 +13,32 @@ body {
   color: #F0F4EF;
 }
 
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+
+/* *********** IDs *********** */
+#correct {
+  background-color: #A1FCDF;
+  color: #0D1821;
+  padding: 1px 20px;
+  border-radius: 8px;
+  margin: 4px;
+}
+
+#incorrect {
+  background-color: #A8201A;
+  color: #F0F4EF;
+  padding: 1px 20px;
+  border-radius: 8px;
+  margin: 4px;
+}
+
+/* **************************** */
+
+/* ******** Classes *********** */
 .container {
   width: 80%;
   margin: 20px auto;
@@ -29,22 +55,6 @@ body {
 .beginCard {
   display: flex;
   flex-direction: column;
-}
-
-#correct {
-  background-color: #A1FCDF;
-  color: #0D1821;
-  padding: 1px 20px;
-  border-radius: 8px;
-  margin: 4px;
-}
-
-#incorrect {
-  background-color: #A8201A;
-  color: #F0F4EF;
-  padding: 1px 20px;
-  border-radius: 8px;
-  margin: 4px;
 }
 
 .card img {
@@ -70,15 +80,10 @@ body {
   margin-top: 20px;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-}
+/* **************************** */
 
-.correct {
-  color: green;
-}
 
+/* Makes formatting responsive */
 @media all and (min-width:600px) {
   .container {
     width: 70%;

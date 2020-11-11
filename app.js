@@ -65,8 +65,65 @@ const STORE = {
  *
  */
 
+// ****************** Controllers and Reference Functions *********************
+
+// Resets the questionNumber if the quiz is completed, increments it if it is incomplete
+function updateQuestionNumber() {
+  if (STORE.questionNumber === STORE.questions.length + 1) {
+    STORE.questionNumber = 0;
+  } else {
+    STORE.questionNumber++;
+  }
+}
+
+// Retrieves and store the users current choice
+function getUserChoice() {
+  let selectedChoice = $("input[name=quizQuestions]:checked").val();
+  return selectedChoice;
+}
+
+// Used for indexing based on the current question number
+function indexQuestion() {
+  const index = STORE.questionNumber - 1;
+  return index;
+}
+
+// Adds the disabled attribute after the submit button is clicked
+function disableBtnAfterSub() {
+  for (let i = 0; i < STORE.questions.length; i++) {
+    $(`input[id=answer-${i}]`).attr("disabled", "disabled");
+  }
+}
+
+// Removes the disabled attribute after the next button is clicked
+function reenableBtnAfterNext() {
+  for (let i = 0; i < STORE.questions.length; i++) {
+    $(`input[id=answer-${i}]`).removeAttr("disabled");
+  }
+}
+
+// Checks the user's answer against the correct answer and returns a boolean
+function checkAnswer() {
+  if (getUserChoice() === STORE.questions[indexQuestion()].correctAnswer) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// Increments the score in STORE
+function addToScore() {
+  STORE.score++;
+}
+
+// Controls the state of the quizStarted boolean
+function toggleQuizStarted() {
+  STORE.quizStarted = !STORE.quizStarted;
+}
+
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
+// Generates the landing page and prompts the user to start
 function createStartCard() {
   return `</div>
     <div class="card beginCard">
@@ -81,23 +138,7 @@ function createStartCard() {
     </div>`;
 }
 
-function indexQuestion() {
-  const index = STORE.questionNumber - 1;
-  return index;
-}
-
-function disableBtnAfterSub() {
-  for (let i = 0; i < STORE.questions.length; i++) {
-    $(`input[id=answer-${i}]`).attr("disabled", "disabled");
-  }
-}
-
-function reenableBtnAfterNext() {
-  for (let i = 0; i < STORE.questions.length; i++) {
-    $(`input[id=answer-${i}]`).removeAttr("disabled");
-  }
-}
-
+// Generates and returns each question card
 function generateQuestionCard() {
   return `<div class="scorecard">
   <p>Score: ${STORE.score}/6</p>
@@ -158,6 +199,7 @@ function generateQuestionCard() {
 </div>`;
 }
 
+// Generates and returns the final score card
 function generateScoreCard() {
   return `<div class="card">
     <h3>You've completed the quiz!</h3>
@@ -168,47 +210,11 @@ function generateScoreCard() {
   </div>`;
 }
 
-function generateCorrectOrIncorrectBanner() {
-  if (checkAnswer()) {
-    let selectedChoice = $("input[name=quizQuestions]:checked").val();
-    // alert(selectedChoice);
-    // alert(STORE.questions[indexQuestion()].answers.indexOf(selectedChoice));
-    $("#js-sub-btn").remove();
-    $("#quiz-form").after(
-      '<form id="next-form"><input class="btn" id="js-next-btn" type="submit" value="Next Question" /></form>'
-    );
-    $(
-      `label[for=answer-${STORE.questions[indexQuestion()].answers.indexOf(
-        selectedChoice
-      )}`
-    ).after("<div id='correct'><p>That is correct!</p></div>");
-    updateQuestionNumber();
-    addToScore();
-  } else {
-    let selectedChoice = $("input[name=quizQuestions]:checked").val();
-    // alert(selectedChoice);
-    // alert(STORE.questions[indexQuestion()].answers.indexOf(selectedChoice));
-    $("#js-sub-btn").remove();
-    $("#quiz-form").after(
-      '<form id="next-form"><input class="btn" id="js-next-btn" type="submit" value="Next Question" /></form>'
-    );
-    $(
-      `label[for=answer-${STORE.questions[indexQuestion()].answers.indexOf(
-        selectedChoice
-      )}`
-    ).after(
-      `<div id='incorrect'><p>That is incorrect! The correct answer is: ${
-        STORE.questions[indexQuestion()].correctAnswer
-      }</p></div>`
-    );
-    updateQuestionNumber();
-  }
-}
-
 // These functions return HTML templates
 
 /********** RENDER FUNCTION(S) **********/
 
+// Primary rendering function that renders each card to the screen
 function render() {
   if (STORE.questionNumber === STORE.questions.length + 1) {
     $("main").html(generateScoreCard());
@@ -219,10 +225,39 @@ function render() {
   }
 }
 
+// Renders the transitional phase of answer verification
+function transition() {
+  $("#js-sub-btn").remove();
+  $("#quiz-form").after(
+    '<form id="next-form"><input class="btn" id="js-next-btn" type="submit" value="Next Question" /></form>'
+  );
+  if (checkAnswer()) {
+    $(
+      `label[for=answer-${STORE.questions[indexQuestion()].answers.indexOf(
+        getUserChoice()
+      )}`
+    ).after("<div id='correct'><p>That is correct!</p></div>");
+    updateQuestionNumber();
+    addToScore();
+  } else {
+    $(
+      `label[for=answer-${STORE.questions[indexQuestion()].answers.indexOf(
+        getUserChoice()
+      )}`
+    ).after(
+      `<div id='incorrect'><p>That is incorrect! The correct answer is: ${
+        STORE.questions[indexQuestion()].correctAnswer
+      }</p></div>`
+    );
+    updateQuestionNumber();
+  }
+}
+
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
 /********** EVENT HANDLER FUNCTIONS **********/
 
+// Event handler for user pressing the start button on the first card
 function startButtonClick() {
   $("#start-form").submit(function (event) {
     event.preventDefault();
@@ -232,14 +267,16 @@ function startButtonClick() {
   });
 }
 
+// Event handler for user pressing the submit button on the question cards
 function submitButtonClick() {
   $("main").on("submit", "#quiz-form", function (event) {
     event.preventDefault();
-    generateCorrectOrIncorrectBanner();
+    transition();
     disableBtnAfterSub();
   });
 }
 
+// Event handler for the user pressing the next button
 function nextBtnClick() {
   $("main").on("submit", "#next-form", function (event) {
     event.preventDefault();
@@ -248,25 +285,7 @@ function nextBtnClick() {
   });
 }
 
-function checkAnswer() {
-  let selectedChoice = $("input[name=quizQuestions]:checked").val();
-  // alert(selectedChoice);
-  // alert(STORE.questions[indexQuestion()].correctAnswer);
-  if (selectedChoice === STORE.questions[indexQuestion()].correctAnswer) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function addToScore() {
-  STORE.score++;
-}
-
-function resetScore() {
-  STORE.score = 0;
-}
-
+// Event handler for restarting the quiz
 function tryAgainButtonClick() {
   $("main").on("submit", "#js-try-again", function (event) {
     event.preventDefault();
@@ -276,21 +295,9 @@ function tryAgainButtonClick() {
   });
 }
 
-function toggleQuizStarted() {
-  STORE.quizStarted = !STORE.quizStarted;
-  return;
-}
-
-function updateQuestionNumber() {
-  if (STORE.questionNumber === STORE.questions.length + 1) {
-    STORE.questionNumber = 0;
-  } else {
-    STORE.questionNumber++;
-  }
-}
-
 // These functions handle events (submit, click, etc)
 
+// Overall handler responsible for calling event listeners and render(initially)
 function handler() {
   render();
   startButtonClick();
@@ -299,4 +306,5 @@ function handler() {
   nextBtnClick();
 }
 
+// Calls the handler function once the page has loaded
 $(handler);
